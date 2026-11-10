@@ -1,0 +1,27 @@
+{
+  "date": "2026-11-09",
+  "signal_date": "2026-11-06",
+  "stage": "open",
+  "candidates": [
+    {
+      "code": "603212",
+      "name": "赛伍技术",
+      "opening_gap": 0.0009049773755656076,
+      "entry_open": 11.06,
+      "entry_close": 10.8,
+      "entry_day_return": -0.023508137432188048,
+      "exit_close": 10.99,
+      "gross_return": -0.006329113924050667
+    },
+    {
+      "code": "000151",
+      "name": "中成股份",
+      "opening_gap": 0.007035175879396949,
+      "entry_open": 10.02,
+      "entry_close": 10.1,
+      "entry_day_return": 0.007984031936127733,
+      "exit_close": 9.93,
+      "gross_return": -0.008982035928143728
+    }
+  ]
+}

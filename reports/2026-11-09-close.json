@@ -1,0 +1,48 @@
+{
+  "date": "2026-11-09",
+  "stage": "close",
+  "candidates": [
+    {
+      "code": "002488",
+      "name": "金固股份",
+      "turnover": 6.76,
+      "volume_lots": 621911.0,
+      "float_cap": 6881500414.201183
+    },
+    {
+      "code": "002596",
+      "name": "海南瑞泽",
+      "turnover": 6.16,
+      "volume_lots": 705841.0,
+      "float_cap": 3987543311.6883116
+    },
+    {
+      "code": "600359",
+      "name": "新农开发",
+      "turnover": 8.98,
+      "volume_lots": 342653.0,
+      "float_cap": 2300888184.8552337
+    },
+    {
+      "code": "600630",
+      "name": "龙头股份",
+      "turnover": 7.79,
+      "volume_lots": 330931.0,
+      "float_cap": 2888743003.851091
+    },
+    {
+      "code": "603318",
+      "name": "水发燃气",
+      "turnover": 8.74,
+      "volume_lots": 401013.0,
+      "float_cap": 3789894027.4599543
+    },
+    {
+      "code": "603956",
+      "name": "威派格",
+      "turnover": 5.71,
+      "volume_lots": 325475.0,
+      "float_cap": 3972961033.274956
+    }
+  ]
+}

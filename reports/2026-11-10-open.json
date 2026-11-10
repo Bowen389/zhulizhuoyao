@@ -1,0 +1,40 @@
+{
+  "date": "2026-11-10",
+  "signal_date": "2026-11-09",
+  "stage": "open",
+  "candidates": [
+    {
+      "code": "600359",
+      "name": "新农开发",
+      "turnover": 8.98,
+      "volume_lots": 342653.0,
+      "float_cap": 2300888184.8552337,
+      "opening_gap": 0.0,
+      "entry_open": 6.03,
+      "entry_close": 6.16,
+      "entry_day_return": 0.021558872305140975
+    },
+    {
+      "code": "600630",
+      "name": "龙头股份",
+      "turnover": 7.79,
+      "volume_lots": 330931.0,
+      "float_cap": 2888743003.851091,
+      "opening_gap": 0.0014705882352941124,
+      "entry_open": 6.81,
+      "entry_close": 7.0,
+      "entry_day_return": 0.027900146842878115
+    },
+    {
+      "code": "603956",
+      "name": "威派格",
+      "turnover": 5.71,
+      "volume_lots": 325475.0,
+      "float_cap": 3972961033.274956,
+      "opening_gap": 0.010043041606886627,
+      "entry_open": 7.04,
+      "entry_close": 7.11,
+      "entry_day_return": 0.009943181818181879
+    }
+  ]
+}
