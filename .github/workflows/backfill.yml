@@ -1,0 +1,32 @@
+name: Zhuoyao historical backfill
+on:
+  push:
+    branches: [main]
+    paths: [.github/workflows/backfill.yml]
+  workflow_dispatch:
+    inputs:
+      signal_day:
+        default: '2026-11-09'
+      entry_day:
+        default: '2026-11-10'
+permissions:
+  contents: write
+concurrency:
+  group: zhuoyao-top3-main
+jobs:
+  backfill:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Rebuild historical reports
+        env:
+          SIGNAL_DAY: ${{ inputs.signal_day || '2026-11-09' }}
+          ENTRY_DAY: ${{ inputs.entry_day || '2026-11-10' }}
+        run: |
+          python backfill.py "$SIGNAL_DAY" "$ENTRY_DAY"
+          git add reports/
+          git diff --cached --quiet && exit 0
+          git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m "Backfill Zhuoyao candidates for $SIGNAL_DAY"
+          git pull --rebase origin main
+          git push origin HEAD:main
