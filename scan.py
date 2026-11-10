@@ -1,0 +1,153 @@
+"""Publish Zhuoyao Top3 candidates, using Eastmoney spot and Tencent daily bars."""
+import argparse
+from concurrent.futures import ThreadPoolExecutor
+from datetime import datetime
+import json
+from pathlib import Path
+from time import sleep
+from urllib.parse import urlencode
+from urllib.request import Request, urlopen
+from zoneinfo import ZoneInfo
+
+TENCENT = 'https://web.ifzq.gtimg.cn/appstock/app/newfqkline/get'
+EASTMONEY = 'https://push2.eastmoney.com/api/qt/clist/get'
+PREFIXES = ('600', '601', '603', '605', '000', '001', '002', '003')
+
+
+def request(url, params):
+    for attempt in range(3):
+        try:
+            req = Request(url + '?' + urlencode(params), headers={'User-Agent': 'Mozilla/5.0'})
+            with urlopen(req, timeout=15) as response:
+                return json.load(response)
+        except (OSError, ValueError):
+            if attempt == 2:
+                raise
+            sleep(attempt + 1)
+
+
+def daily(symbol):
+    result = request(TENCENT, {'param': f'{symbol},day,,,260,qfq'})
+    data = (result.get('data') or {}).get(symbol) or {}
+    rows = data.get('qfqday') or data.get('day')
+    if not rows:
+        raise ValueError(f'{symbol}: no Tencent daily bars')
+    return rows
+
+
+def gold_cross(rows):
+    rows = [r for r in rows if float(r[5]) > 0]
+    if len(rows) < 11:
+        return False
+    smoothed = previous = current = None
+    for i in range(9, len(rows)):
+        window = rows[i-9:i+1]
+        high = max(float(r[3]) for r in window)
+        low = min(float(r[4]) for r in window)
+        if high <= low:
+            previous = None
+            current = None
+            continue
+        position = (float(rows[i][2]) - low) / (high - low)
+        gap = 400 * position - 180
+        smoothed = gap if smoothed is None else .2 * gap + .8 * smoothed
+        previous, current = current, smoothed
+    return previous is not None and current is not None and previous <= 0 < current
+
+
+def spot(day):
+    records = {}
+    page = 1
+    while True:
+        payload = request(EASTMONEY, {
+            'pn': page, 'pz': 100, 'po': 1, 'fid': 'f12', 'np': 1, 'fltt': 2,
+            'fs': 'm:0+t:6,m:1+t:2', 'fields': 'f2,f5,f8,f12,f14,f124',
+        })
+        data = payload.get('data') or {}
+        batch = data.get('diff') or []
+        if not batch:
+            raise ValueError(f'Eastmoney returned empty page {page}')
+        for row in batch:
+            records[row['f12']] = row
+        if len(records) >= int(data['total']):
+            break
+        page += 1
+        if page > 60:
+            raise ValueError('Incomplete Eastmoney stock list')
+    if len(records) < 2500:
+        raise ValueError('Incomplete Eastmoney stock list')
+    current_quotes = 0
+    for row in records.values():
+        code, name = row['f12'], row['f14']
+        if not code.startswith(PREFIXES) or 'ST' in name.upper() or '退' in name:
+            continue
+        try:
+            close, volume, turnover = (float(row[key]) for key in ('f2', 'f5', 'f8'))
+            quote_day = datetime.fromtimestamp(int(row['f124']), ZoneInfo('Asia/Shanghai')).date().isoformat()
+        except (TypeError, ValueError):
+            continue
+        if quote_day != day or close <= 0:
+            continue
+        current_quotes += 1
+        if 300000 <= volume < 800000 and 5 <= turnover < 15:
+            cap = close * volume * 10000 / turnover
+            if cap < 7.5e9:
+                yield dict(code=code,name=name,turnover=turnover,volume_lots=volume,float_cap=cap)
+
+    if current_quotes < 2000:
+        raise ValueError(f'Only {current_quotes} fresh main-board quotes for {day}')
+
+def symbol(code):
+    return ('sh' if code.startswith('6') else 'sz') + code
+
+
+def scan(day, stage, index):
+    if stage == 'close':
+        def check(row):
+            bars = daily(symbol(row['code']))
+            if bars[-1][0] != day:
+                raise ValueError(f"{row['code']}: daily bar not published for {day}")
+            return row if gold_cross(bars) else None
+
+        with ThreadPoolExecutor(max_workers=8) as workers:
+            results = [row for row in workers.map(check, spot(day)) if row is not None]
+        return dict(date=day, stage=stage, candidates=sorted(results, key=lambda r:r['code']))
+
+    previous = index[-2][0]
+    watchlist = json.loads(Path(f'reports/{previous}-close.json').read_text())
+    if watchlist.get('date') != previous:
+        raise ValueError('Previous session watchlist date mismatch')
+    ranked = []
+    for row in watchlist['candidates']:
+        bars = daily(symbol(row['code']))
+        if bars[-1][0] != day:
+            raise ValueError(f"{row['code']}: opening bar not verified for {day}")
+        if bars[-2][0] != previous:
+            raise ValueError(f"{row['code']}: previous bar date mismatch")
+        gap = float(bars[-1][1]) / float(bars[-2][2]) - 1
+        if -.02 <= gap < -.01 or 0 <= gap < .03:
+            ranked.append(dict(row, opening_gap=gap))
+    ranked.sort(key=lambda r:(r['opening_gap'] >= 0, r['opening_gap'], r['code']))
+    return dict(date=day, signal_date=previous, stage=stage, candidates=ranked[:3])
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('stage', choices=['close', 'open'])
+    args = parser.parse_args()
+    now = datetime.now(ZoneInfo('Asia/Shanghai'))
+    day = now.date().isoformat()
+    if now.weekday() >= 5:
+        return
+    index = daily('sh000300')
+    if index[-1][0] != day:
+        raise SystemExit(f'{day}: no current index bar (market closed or data delayed)')
+    result = scan(day, args.stage, index)
+    path = Path(f'reports/{day}-{args.stage}.json')
+    path.parent.mkdir(exist_ok=True)
+    path.write_text(json.dumps(result, ensure_ascii=False, indent=2)+'\n', encoding='utf-8')
+    print(json.dumps(result, ensure_ascii=False, indent=2))
+
+
+if __name__ == '__main__':
+    main()
