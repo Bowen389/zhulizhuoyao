@@ -1,0 +1,83 @@
+{
+  "date": "2026-11-10",
+  "stage": "close",
+  "candidates": [
+    {
+      "code": "000710",
+      "name": "贝瑞基因",
+      "turnover": 9.06,
+      "volume_lots": 303923.0,
+      "float_cap": 3351203940.397351
+    },
+    {
+      "code": "000889",
+      "name": "中嘉博创",
+      "turnover": 5.38,
+      "volume_lots": 468095.0,
+      "float_cap": 2827711431.2267656
+    },
+    {
+      "code": "000993",
+      "name": "闽东电力",
+      "turnover": 12.96,
+      "volume_lots": 593377.0,
+      "float_cap": 5768943055.555555
+    },
+    {
+      "code": "002036",
+      "name": "联创电子",
+      "turnover": 5.02,
+      "volume_lots": 529614.0,
+      "float_cap": 5992445258.964144
+    },
+    {
+      "code": "002084",
+      "name": "海鸥住工",
+      "turnover": 5.43,
+      "volume_lots": 350208.0,
+      "float_cap": 2721690165.7458563
+    },
+    {
+      "code": "002141",
+      "name": "贤丰控股",
+      "turnover": 7.59,
+      "volume_lots": 784276.0,
+      "float_cap": 5228506666.666666
+    },
+    {
+      "code": "002160",
+      "name": "常铝股份",
+      "turnover": 6.35,
+      "volume_lots": 654418.0,
+      "float_cap": 4122318110.236221
+    },
+    {
+      "code": "600202",
+      "name": "哈空调",
+      "turnover": 11.86,
+      "volume_lots": 454545.0,
+      "float_cap": 2008276391.231029
+    },
+    {
+      "code": "600281",
+      "name": "华阳新材",
+      "turnover": 13.09,
+      "volume_lots": 673293.0,
+      "float_cap": 2849536455.3093967
+    },
+    {
+      "code": "601091",
+      "name": "沈鼓集团",
+      "turnover": 14.51,
+      "volume_lots": 306317.0,
+      "float_cap": 3909711123.363198
+    },
+    {
+      "code": "603058",
+      "name": "永吉股份",
+      "turnover": 9.88,
+      "volume_lots": 409779.0,
+      "float_cap": 3542016862.348178
+    }
+  ]
+}
