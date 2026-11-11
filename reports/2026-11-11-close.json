@@ -1,0 +1,48 @@
+{
+  "date": "2026-11-11",
+  "stage": "close",
+  "candidates": [
+    {
+      "code": "000545",
+      "name": "金浦钛业",
+      "turnover": 6.02,
+      "volume_lots": 593345.0,
+      "float_cap": 2059951910.2990031
+    },
+    {
+      "code": "000759",
+      "name": "中百集团",
+      "turnover": 5.89,
+      "volume_lots": 385917.0,
+      "float_cap": 3760888930.3904924
+    },
+    {
+      "code": "002278",
+      "name": "神开股份",
+      "turnover": 11.98,
+      "volume_lots": 429702.0,
+      "float_cap": 2862288781.3021703
+    },
+    {
+      "code": "002579",
+      "name": "中京电子",
+      "turnover": 9.57,
+      "volume_lots": 558199.0,
+      "float_cap": 7413489331.243469
+    },
+    {
+      "code": "002593",
+      "name": "日上集团",
+      "turnover": 9.0,
+      "volume_lots": 504718.0,
+      "float_cap": 2663789444.4444447
+    },
+    {
+      "code": "002640",
+      "name": "跨境通",
+      "turnover": 5.15,
+      "volume_lots": 797484.0,
+      "float_cap": 5048151145.631067
+    }
+  ]
+}
