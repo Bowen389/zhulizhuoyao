@@ -109,8 +109,15 @@ def scan(day, stage, index):
                 raise ValueError(f"{row['code']}: daily bar not published for {day}")
             return row if gold_cross(bars) else None
 
-        with ThreadPoolExecutor(max_workers=8) as workers:
-            results = [row for row in workers.map(check, spot(day)) if row is not None]
+        try:
+            snapshot = list(spot(day))
+        except (OSError, ValueError) as error:
+            print(f'Eastmoney snapshot unavailable: {error}. Using TDX and Tencent daily data.')
+            from backfill import historical_candidates
+            results = historical_candidates(day)
+        else:
+            with ThreadPoolExecutor(max_workers=8) as workers:
+                results = [row for row in workers.map(check, snapshot) if row is not None]
         return dict(date=day, stage=stage, candidates=sorted(results, key=lambda r:r['code']))
 
     previous = index[-2][0]
