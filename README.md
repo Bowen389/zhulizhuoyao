@@ -21,7 +21,7 @@
 
 ## 自动扫描
 
-- 北京时间工作日 **17:12** 生成盘后初筛，输出 `reports/YYYY-MM-DD-close.json`。
+- 北京时间工作日 **17:12** 生成盘后初筛。**17:32** 再检查一次，当日盘后报告已存在时跳过扫描，输出 `reports/YYYY-MM-DD-close.json`。
 - 北京时间工作日 **09:36** 读取上一交易日的盘后名单，确认开盘档位并输出最多三只，路径为 `reports/YYYY-MM-DD-open.json`。
 - 可在 [Actions](https://github.com/Bowen389/zhulizhuoyao/actions/workflows/daily.yml) 手动运行，阶段选择 `close` 或 `open`。手动运行使用北京时间当日，开盘阶段依赖上一交易日已有盘后报告。
 - 盘后用东方财富行情快照预筛，使用腾讯前复权日线核对金叉。若指数行情未更新、现货快照覆盖不足或候选数据缺失，任务报错并保留之前的报告。
