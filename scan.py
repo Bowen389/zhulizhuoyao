@@ -138,6 +138,33 @@ def scan(day, stage, index):
     return dict(date=day, signal_date=previous, stage=stage, candidates=ranked[:3])
 
 
+def render_markdown(result):
+    opening = result['stage'] == 'open'
+    title = '开盘 Top3' if opening else '盘后初筛'
+    rows = result['candidates']
+    lines = [f"# 主力捉妖 · {result['date']} {title}", ""]
+    if opening:
+        lines += [f"信号日 {result['signal_date']}。按开盘缺口排序，最多取三只。", ""]
+    else:
+        lines += ["盘后候选按代码排列，下一交易日开盘确认排名。", ""]
+    lines += [f"候选数 **{len(rows)}**。", ""]
+    if rows:
+        columns = ["排名", "代码", "名称", "换手率", "成交量（手）", "估算流通市值（亿元）"]
+        if opening:
+            columns.append("开盘缺口")
+        lines += ["| " + " | ".join(columns) + " |", "| " + " | ".join(["---"] * len(columns)) + " |"]
+        for rank, row in enumerate(rows, 1):
+            name = row["name"].replace("|", "&#124;").replace("\n", " ")
+            cells = [str(rank) if opening else "—", row["code"], name,
+                     f"{row['turnover']:.2f}%", f"{row['volume_lots']:,.0f}", f"{row['float_cap'] / 1e8:.2f}"]
+            if opening:
+                cells.append(f"{row['opening_gap']:+.2%}")
+            lines.append("| " + " | ".join(cells) + " |")
+    else:
+        lines.append("本次扫描无符合条件的候选。")
+    return "\n".join(lines) + "\n"
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('stage', choices=['close', 'open'])
@@ -153,7 +180,9 @@ def main():
     path = Path(f'reports/{day}-{args.stage}.json')
     path.parent.mkdir(exist_ok=True)
     path.write_text(json.dumps(result, ensure_ascii=False, indent=2)+'\n', encoding='utf-8')
-    print(json.dumps(result, ensure_ascii=False, indent=2))
+    markdown = render_markdown(result)
+    path.with_suffix('.md').write_text(markdown, encoding='utf-8')
+    print(markdown, end='')
 
 
 if __name__ == '__main__':
