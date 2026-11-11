@@ -29,13 +29,7 @@ def rank(watchlist, signal_day, entry_day):
     return sorted(ranked,key=lambda r:(r['opening_gap']>=0,r['opening_gap'],r['code']))[:3]
 
 
-def main():
-    parser=argparse.ArgumentParser()
-    parser.add_argument('signal_day')
-    parser.add_argument('entry_day')
-    args=parser.parse_args()
-    day,entry_day=args.signal_day,args.entry_day
-    reports=Path('reports')
+def historical_candidates(day):
     market=read_session(day)
 
     def screen(item):
@@ -60,7 +54,17 @@ def main():
         return dict(code=code,name=row['name'],turnover=turnover,volume_lots=volume,float_cap=cap)
 
     with ThreadPoolExecutor(max_workers=10) as workers:
-        candidates=sorted((r for r in workers.map(screen,market.items()) if r),key=lambda r:r['code'])
+        return sorted((r for r in workers.map(screen,market.items()) if r),key=lambda r:r['code'])
+
+
+def main():
+    parser=argparse.ArgumentParser()
+    parser.add_argument('signal_day')
+    parser.add_argument('entry_day')
+    args=parser.parse_args()
+    day,entry_day=args.signal_day,args.entry_day
+    reports=Path('reports')
+    candidates=historical_candidates(day)
     result=dict(date=day,stage='close',candidates=candidates)
     opened=dict(date=entry_day,signal_date=day,stage='open',candidates=rank(candidates,day,entry_day))
     prior=[]
