@@ -1,0 +1,31 @@
+{
+  "date": "2026-11-11",
+  "signal_date": "2026-11-10",
+  "stage": "open",
+  "candidates": [
+    {
+      "code": "600281",
+      "name": "华阳新材",
+      "turnover": 13.09,
+      "volume_lots": 673293.0,
+      "float_cap": 2849536455.3093967,
+      "opening_gap": 0.00902527075812265
+    },
+    {
+      "code": "000993",
+      "name": "闽东电力",
+      "turnover": 12.96,
+      "volume_lots": 593377.0,
+      "float_cap": 5768943055.555555,
+      "opening_gap": 0.011111111111111072
+    },
+    {
+      "code": "002036",
+      "name": "联创电子",
+      "turnover": 5.02,
+      "volume_lots": 529614.0,
+      "float_cap": 5992445258.964144,
+      "opening_gap": 0.019366197183098732
+    }
+  ]
+}
