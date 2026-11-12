@@ -1,0 +1,20 @@
+{
+  "date": "2026-11-12",
+  "stage": "close",
+  "candidates": [
+    {
+      "code": "002119",
+      "name": "康强电子",
+      "turnover": 10.25,
+      "volume_lots": 384530.0,
+      "float_cap": 7232915512.195122
+    },
+    {
+      "code": "603696",
+      "name": "安记食品",
+      "turnover": 13.21,
+      "volume_lots": 310676.0,
+      "float_cap": 3348997910.673732
+    }
+  ]
+}
