@@ -1,0 +1,23 @@
+{
+  "date": "2026-11-12",
+  "signal_date": "2026-11-11",
+  "stage": "open",
+  "candidates": [
+    {
+      "code": "002278",
+      "name": "神开股份",
+      "turnover": 11.98,
+      "volume_lots": 429702.0,
+      "float_cap": 2862288781.3021703,
+      "opening_gap": -0.018796992481203034
+    },
+    {
+      "code": "000759",
+      "name": "中百集团",
+      "turnover": 5.89,
+      "volume_lots": 385917.0,
+      "float_cap": 3760888930.3904924,
+      "opening_gap": 0.0
+    }
+  ]
+}
