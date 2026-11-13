@@ -1,0 +1,15 @@
+{
+  "date": "2026-11-13",
+  "signal_date": "2026-11-12",
+  "stage": "open",
+  "candidates": [
+    {
+      "code": "002119",
+      "name": "康强电子",
+      "turnover": 10.25,
+      "volume_lots": 384530.0,
+      "float_cap": 7232915512.195122,
+      "opening_gap": 0.010892116182572575
+    }
+  ]
+}
