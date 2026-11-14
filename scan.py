@@ -168,12 +168,16 @@ def render_markdown(result):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('stage', choices=['close', 'open'])
+    parser.add_argument('--date')
     args = parser.parse_args()
     now = datetime.now(ZoneInfo('Asia/Shanghai'))
-    day = now.date().isoformat()
-    if now.weekday() >= 5:
+    today = now.date().isoformat()
+    day = args.date or today
+    if args.stage == 'open' and day != today:
+        parser.error('Opening scan requires the current session')
+    if not args.date and now.weekday() >= 5:
         return
-    index = daily('sh000300')
+    index = [bar for bar in daily('sh000300') if bar[0] <= day]
     if index[-1][0] != day:
         raise SystemExit(f'{day}: no current index bar (market closed or data delayed)')
     result = scan(day, args.stage, index)
