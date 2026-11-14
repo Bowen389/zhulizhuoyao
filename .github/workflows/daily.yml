@@ -9,6 +9,10 @@ on:
     - cron: '36 1 * * 1-5'
   workflow_dispatch:
     inputs:
+      date:
+        description: 'Close scan date YYYY-MM-DD'
+        type: string
+        required: false
       stage:
         description: 'Candidate scan stage'
         type: choice
@@ -30,18 +34,26 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - run: python -m pip install 'exchange-calendars>=4.11,<5'
       - name: Scan and publish
         env:
+          INPUT_DATE: ${{ inputs.date }}
           EVENT_NAME: ${{ github.event_name }}
           STAGE: ${{ inputs.stage || (github.event.schedule == '36 1 * * 1-5' && 'open' || 'close') }}
         run: |
           set -euo pipefail
-          day=$(TZ=Asia/Shanghai date +%F)
+          if [ "$STAGE" = open ]; then
+            day=$(TZ=Asia/Shanghai date +%F)
+          elif [ -n "$INPUT_DATE" ]; then
+            day=$INPUT_DATE
+          else
+            day=$(python3 -c 'from datetime import datetime, timedelta; from zoneinfo import ZoneInfo; from exchange_calendars import get_calendar; now=datetime.now(ZoneInfo("Asia/Shanghai")); cutoff=now.date()-timedelta(days=int(now.hour < 15)); print(get_calendar("XSHG").date_to_session(cutoff.isoformat(), direction="previous").date())')
+          fi
           if [ "$EVENT_NAME" != workflow_dispatch ] && [ -s "reports/$day-$STAGE.json" ]; then
             echo "Already published $day $STAGE" | tee -a "$GITHUB_STEP_SUMMARY"
             exit 0
           fi
-          python scan.py "$STAGE" | tee -a "$GITHUB_STEP_SUMMARY"
+          python scan.py "$STAGE" --date "$day" | tee -a "$GITHUB_STEP_SUMMARY"
           git add -- reports/ 2>/dev/null || test ! -d reports
           if git diff --cached --quiet; then exit 0; fi
           git config user.name 'github-actions[bot]'
