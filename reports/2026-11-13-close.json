@@ -1,0 +1,20 @@
+{
+  "date": "2026-11-13",
+  "stage": "close",
+  "candidates": [
+    {
+      "code": "002474",
+      "name": "榕基软件",
+      "turnover": 5.71,
+      "volume_lots": 306838.0,
+      "float_cap": 2982400875.6567426
+    },
+    {
+      "code": "002693",
+      "name": "双成药业",
+      "turnover": 13.45,
+      "volume_lots": 552772.0,
+      "float_cap": 3513903791.8215623
+    }
+  ]
+}
