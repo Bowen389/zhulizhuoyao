@@ -1,0 +1,15 @@
+{
+  "date": "2026-11-16",
+  "signal_date": "2026-11-13",
+  "stage": "open",
+  "candidates": [
+    {
+      "code": "002693",
+      "name": "双成药业",
+      "turnover": 13.45,
+      "volume_lots": 552772.0,
+      "float_cap": 3513903791.8215623,
+      "opening_gap": 0.007017543859648923
+    }
+  ]
+}
