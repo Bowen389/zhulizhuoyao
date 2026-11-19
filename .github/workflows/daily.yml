@@ -4,9 +4,10 @@ on:
     branches: [main]
     paths: [.github/workflows/daily.yml]
   schedule:
-    - cron: '12 9 * * 1-5'
-    - cron: '32 9 * * 1-5'
+    # GitHub native schedule; UTC -> Asia/Shanghai 17:00 / 18:00
     - cron: '36 1 * * 1-5'
+    - cron: '0 9 * * 1-5'
+    - cron: '0 10 * * 1-5'
   workflow_dispatch:
     inputs:
       date:
