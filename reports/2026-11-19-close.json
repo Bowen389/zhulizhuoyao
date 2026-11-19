@@ -1,0 +1,20 @@
+{
+  "date": "2026-11-19",
+  "stage": "close",
+  "candidates": [
+    {
+      "code": "002165",
+      "name": "红 宝 丽",
+      "turnover": 6.79,
+      "volume_lots": 494253.0,
+      "float_cap": 4585852577.319588
+    },
+    {
+      "code": "002582",
+      "name": "好想你",
+      "turnover": 14.45,
+      "volume_lots": 497314.0,
+      "float_cap": 3503568525.9515567
+    }
+  ]
+}
