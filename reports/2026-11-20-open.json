@@ -1,0 +1,15 @@
+{
+  "date": "2026-11-20",
+  "signal_date": "2026-11-19",
+  "stage": "open",
+  "candidates": [
+    {
+      "code": "002165",
+      "name": "红 宝 丽",
+      "turnover": 6.79,
+      "volume_lots": 494253.0,
+      "float_cap": 4585852577.319588,
+      "opening_gap": 0.0
+    }
+  ]
+}
