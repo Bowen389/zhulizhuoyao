@@ -1,0 +1,27 @@
+{
+  "date": "2026-11-25",
+  "stage": "close",
+  "candidates": [
+    {
+      "code": "000888",
+      "name": "峨眉山Ａ",
+      "turnover": 5.91,
+      "volume_lots": 311333.0,
+      "float_cap": 5610315482.233502
+    },
+    {
+      "code": "002069",
+      "name": "獐子岛",
+      "turnover": 5.9,
+      "volume_lots": 419043.0,
+      "float_cap": 2514258000.0
+    },
+    {
+      "code": "603887",
+      "name": "城地香江",
+      "turnover": 10.77,
+      "volume_lots": 648600.0,
+      "float_cap": 5106896935.933147
+    }
+  ]
+}
