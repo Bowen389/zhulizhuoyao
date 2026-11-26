@@ -1,0 +1,20 @@
+{
+  "date": "2026-11-26",
+  "stage": "close",
+  "candidates": [
+    {
+      "code": "002194",
+      "name": "武汉凡谷",
+      "turnover": 12.12,
+      "volume_lots": 623644.0,
+      "float_cap": 4728785775.577558
+    },
+    {
+      "code": "600189",
+      "name": "泉阳泉",
+      "turnover": 8.54,
+      "volume_lots": 610868.0,
+      "float_cap": 6473484074.941453
+    }
+  ]
+}
