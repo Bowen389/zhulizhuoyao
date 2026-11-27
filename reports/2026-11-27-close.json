@@ -1,0 +1,48 @@
+{
+  "date": "2026-11-27",
+  "stage": "close",
+  "candidates": [
+    {
+      "code": "000756",
+      "name": "新华制药",
+      "turnover": 6.49,
+      "volume_lots": 323979.0,
+      "float_cap": 6160093775.038521
+    },
+    {
+      "code": "002038",
+      "name": "双鹭药业",
+      "turnover": 7.67,
+      "volume_lots": 653960.0,
+      "float_cap": 4254576792.698827
+    },
+    {
+      "code": "600223",
+      "name": "福瑞达",
+      "turnover": 5.06,
+      "volume_lots": 514533.0,
+      "float_cap": 5511400909.09091
+    },
+    {
+      "code": "600610",
+      "name": "中毅达",
+      "turnover": 8.53,
+      "volume_lots": 604300.0,
+      "float_cap": 4654456037.514654
+    },
+    {
+      "code": "603166",
+      "name": "福达股份",
+      "turnover": 7.69,
+      "volume_lots": 494189.0,
+      "float_cap": 7197551105.331599
+    },
+    {
+      "code": "603386",
+      "name": "骏亚科技",
+      "turnover": 11.31,
+      "volume_lots": 369085.0,
+      "float_cap": 5211571573.82847
+    }
+  ]
+}
